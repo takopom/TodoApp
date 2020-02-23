@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TODOアプリ</title>
+    <link rel="stylesheet" type="text/css" href="css/reset.css" />
+    <link
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" type="text/css" href="css/style.css" />
+  </head>
+  <body>
+    <header>
+      <h1>TODO app ✨</h1>
+    </header>
+
+    <div id="app">
+      <div class="input-area">
+        <input
+          class="input-area-text"
+          type="text"
+          v-model="title"
+          placeholder="何をする？"
+          required
+        />
+        <button class="button-add" type="submit" @click="addToDoList">
+          <i class="material-icons">
+            add
+          </i>
+        </button>
+      </div>
+
+      <todo-tabs @change="changeTab($event)"></todo-tabs>
+
+      <div class="todo-list all" v-if="activeTab === 'All'">
+        <ul>
+          <li v-for="todo in allTodos" :key="todo.id">
+            <todo-item :todo="todo" @remove="removeToDo(todo)"></todo-item>
+          </li>
+        </ul>
+      </div>
+
+      <div class="todo-list active" v-if="activeTab === 'Active'">
+        <ul>
+          <li v-for="todo in activeTodos" :key="todo.id">
+            <todo-item :todo="todo" @remove="removeToDo(todo)"></todo-item>
+          </li>
+        </ul>
+      </div>
+
+      <div class="todo-list done" v-if="activeTab === 'Completed'">
+        <ul>
+          <li v-for="todo in completedTodos" :key="todo.id">
+            <todo-item :todo="todo" @remove="removeToDo(todo)"></todo-item>
+          </li>
+        </ul>
+
+        <!-- <ul>
+          <li v-for="todo in completedTodos" :key="todo.id">
+            <input
+              type="checkbox"
+              name="done"
+              :value="todo.id"
+              v-model="todo.done"
+            />
+            {{ todo.title }}
+          </li>
+        </ul> -->
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+    <script src="js/main.js"></script>
+  </body>
+</html>
